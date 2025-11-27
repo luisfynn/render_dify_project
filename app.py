@@ -8,7 +8,7 @@ app = Flask(__name__)
 # ---------------------------------------------------------
 # 설정 (Render 환경변수 또는 직접 입력)
 # ---------------------------------------------------------
-DIFY_API_KEY = os.environ.get("DIFY_API_KEY", "여기에_DIFY_API_KEY")
+DIFY_API_KEY = os.environ.get("DIFY_API_KEY")
 DIFY_URL = "https://api.dify.ai/v1/chat-messages"
 
 # ---------------------------------------------------------
