@@ -160,8 +160,11 @@ def ask_agent():
 
     try:
         response = requests.post(DIFY_URL, json=payload, headers=headers)
+        # 거절당한 이유(숫자와 메시지)를 그대로 보여줘라!
         if response.status_code != 200:
-            return {"answer": "죄송합니다. 에이전트 연결에 실패했습니다."}
+            error_msg = f"⛔ 연결 실패! 상태코드: {response.status_code}, 이유: {response.text}"
+            print(error_msg) # 로그에도 남기고
+            return {"answer": error_msg} # 화면에도 보여줌
             
         result = response.json()
         full_answer = result.get('answer', '')
