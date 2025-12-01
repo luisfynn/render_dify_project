@@ -4,6 +4,7 @@ import google.generativeai as genai
 from flask import Flask, render_template, request, redirect, url_for
 from git import Repo
 from dotenv import load_dotenv
+import csv
 
 # .env 파일을 절대 경로로 명시적으로 로드 (PythonAnywhere 호환성 강화)
 project_folder = os.path.expanduser('~/mysite')
@@ -114,7 +115,11 @@ def upload_image():
         else:
             df = pd.DataFrame([new_row]) # [수정] pd.DataFrame
 
-        df.to_csv(CSV_PATH, index=False)
+        # [저장하는 부분 수정] (upload_image 함수 내)
+        # quoting=csv.QUOTE_ALL : 모든 내용을 쌍따옴표로 감싸서 쉼표 대란을 막음
+        # encoding='utf-8' : 엑셀 호환성보다 Dify 호환성을 위해 sig 제거
+        df.to_csv(CSV_PATH, index=False, quoting=csv.QUOTE_ALL, encoding='utf-8')
+        # df.to_csv(CSV_PATH, index=False)
 
         # Git Push
         try:
