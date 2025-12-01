@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>결제 페이지</title>
+    <style>
+        .gallery { display: flex; flex-wrap: wrap; gap: 20px; }
+        .item { border: 1px solid #ddd; padding: 10px; border-radius: 10px; width: 200px; text-align: center; }
+        img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; }
+        .price-tag { font-weight: bold; color: #d35400; }
+    </style>
+    <script>
+        function updatePrice() {
+            const checks = document.querySelectorAll('input[type="checkbox"]:checked');
+            const total = checks.length * 10000; // 개당 만원
+            document.getElementById('total').innerText = total.toLocaleString();
+        }
+    </script>
+</head>
+<body>
+    <h1>💳 결제 페이지</h1>
+    <p>구매하실 작품을 선택해주세요. (장당 10,000원)</p>
+
+    <div class="gallery">
+        {% for img in images %}
+        <div class="item">
+            <img src="{{ img.url }}">
+            <p>{{ img.description[:20] }}...</p>
+            <label>
+                <input type="checkbox" onclick="updatePrice()"> 선택하기
+            </label>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2>총 결제 금액: <span id="total">0</span>원</h2>
+    <button onclick="location.href='/success'" style="padding: 10px 30px; background: blue; color: white;">결제하기</button>
+</body>
+</html>
